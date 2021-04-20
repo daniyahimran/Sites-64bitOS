@@ -1,0 +1,112 @@
+* {
+    margin: 0%;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.name
+{
+    width: 30%;
+    font-size: 4vh;
+    align-self: center;
+    text-align: left;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+}
+
+.button_menu
+{
+    width: 35%;
+    font-size: 4vh;
+    align-self: center;
+    text-align: right;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+}
+
+header{
+    width:100%;
+    text-align: center;
+    color: white;  
+}
+nav{
+    width: 100%;
+    height: 15vh;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+}
+
+
+.main_buttons{
+    padding-right: 5%;
+    padding-left: 5%;
+    width: 50%;
+    height: 20vh;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+    align-self: center;   
+    text-decoration:none;
+    color: white;
+}
+
+nav a{
+    text-decoration:none;
+    color: white;
+}
+
+
+nav a:hover {
+    color: black;
+  }
+
+body{
+    height: 100%;
+    width: 100%;
+    background-image: url("../images/OSbg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+main{
+    width: 100%;
+    padding-top: 18vh;
+}
+
+.headings
+{
+    text-align:center;
+    font-size: 3.5vh;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
+.center_tasks
+{
+    background-color: whitesmoke; 
+    width: 75%;
+    border: 1px black solid;
+    align-items: center;
+}
+
+mark{
+    background-color: grey;
+}
+
+.taskheadings
+{
+    padding-left: 15px;
+}

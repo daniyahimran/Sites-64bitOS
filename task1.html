@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>64bit OS</title>
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div>
+<header>
+    <nav>
+    <div class="name">
+        <a href="aboutme.html">About Me</a>
+        <a href="cv.html">My CV</a>
+        <a href="index.html">Home</a>
+    </div>
+
+    <div class="button_menu">
+        <a href="task1.html">Task 1</a>
+        <a href="task2.html">Task 2</a>
+        <a href="https://github.com/daniyahimran/64bit-OS">Github Repository</a>
+    </div>
+</nav>
+</header>
+<br><br><br><br>
+
+<div class="center center_tasks">
+<br>
+    <h2>
+    x86 64-bit Operating System using C and Assembly Language
+    </h2>
+    <h4 style="font-weight: lighter;">
+        This post will tell how I made a simple 64-bit OS and how to print to the sreen.
+    </h4>
+<br>
+</div>
+
+<main>
+    <div class="center center_tasks">
+        
+        <br><h2 class="taskheadings">
+            Required Softwares: 
+        </h2>
+        <hr>
+        <br>
+        <h4 style="font-weight: lighter;">
+            <ul style="list-style-type: circle; padding-left: 35px;">
+                <li> <a href="https://code.visualstudio.com/" style=" color:black">IDE</a> - Visual Studio Code</li>
+                <li><a href="https://www.docker.com/" style=" color: black;">Docker</a> - For creating linux image.</li>
+                <li><a href="https://www.qemu.org/" style=" color: black;">Qemu</a> - To run our OS</li>
+              </ul>  
+        </h4>
+
+        <br><h2 class="taskheadings">
+            Commands Used: 
+        </h2>
+        <hr><br>
+        <h4 style="font-weight: lighter;">
+            <ul style="list-style-type: circle; padding-left: 35px;">
+                <li> To build image: <mark> docker build buildenv -t myos-buildenv </mark></li>
+                <li> To enter the built image:<mark> docker run --rm -it -v "%cd%":/root/env myos-buildenv</mark></li>
+                <li> To build the x86-64 system: <mark>make build-x86_64</mark></li>
+                <li> To exit image:<mark> exit</mark></li>
+                <li> To run commands in 64-bit OS: <mark>qemu-system-x86_64 -cdrom dist/x86_64/kernel.iso</mark></li>
+              </ul>  
+        </h4>
+    
+
+
+        <br><h2 class="taskheadings">
+            File Hierarchy
+        </h2>
+        <hr><br>
+        <div style="padding-left: 7%;">
+        <h4 style="font-weight: lighter;">
+            <ul style="list-style-type: circle; padding-left: 35px;">
+               
+                <li>Makefile</li>
+                
+                <li>buildenv<ul style="list-style-type: square; padding-left: 35px;">
+                    <li>Dockerfile</li>
+                    </ul> </li>
+                <li> src
+                    <ul style="list-style-type: square; padding-left: 35px;">
+                    <li> impl
+                        <ul style="list-style-type: circle; padding-left: 35px;">  
+                            <li> x86_64
+                                    <ul style="list-style-type: square; padding-left: 35px;">
+                                        <li> boot <ul style="list-style-type: circle; padding-left: 35px;">
+                                            <li>main.asm</li> 
+                                            <li>header.asm</li>
+                                        </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                    </li>
+                    </ul> 
+                </li>
+
+                <li>
+                    targets
+                    <ul style="list-style-type: square; padding-left: 35px;">
+                        <li>
+                            x86_64
+                            <ul style="list-style-type: circle; padding-left: 35px;">
+                                <li>linker.ld</li>
+
+                                <li>
+                                    iso
+                                    <ul style="list-style-type: square; padding-left: 35px;">
+                                        <li>.gitignore</li>                                        <li>
+                                            boot
+                                            <ul style="list-style-type: circle; padding-left: 35px;">
+                                                <li>
+                                                    grub
+                                                    <ul style="list-style-type: square; padding-left: 35px;">
+                                                        <li>grub.cfg</li>
+                                                    </ul>
+                                                </li>
+                                            </ul> 
+                                        </li>
+                                    </ul> 
+                                </li>
+                            </ul> 
+                        </li>
+                    </ul>
+                </li>    
+                </ul>
+            </div>
+        </h4>
+
+
+
+
+
+
+
+        <br><h2 class="taskheadings">
+            Explanation: 
+        </h2>
+        <hr><br>
+        <h3 class="taskheadings">
+            Step 1 : Docker File
+        </h3>
+        <h4 style="font-weight: lighter;">
+            <p class="taskheadings">
+                First, I made a folder named buildenv and created a new Docker File inside it. In this file by coding, I created 
+                an image of a linux operating system on my PC without actually having to install and configure Linux. In this docker 
+                file we install all
+                requisites for running assembly on our PC and tell the docker desktop app in which directory on our PC
+                to create the linux image. After saving this file, I ran command 1 from the commands section and after it has 
+                completed running, which took 15 minutes on my PC, I ran command 2 in the terminal. At the end of this 
+                a new linux environment will have been created and we will be inside it by help of command 2.
+            </p>
+        </h4>
+        <br>
+        <img src="images/dockerfile.jpg" class="center">
+        <br><br>
+
+        <h3 class="taskheadings">
+            Step 2 : Assembly files 1 - header.asm
+        </h3>
+        <h4 style="font-weight: lighter;">
+            <p class="taskheadings">
+               Creating a new folder called src, more folders and files were made following the hierarcy: <mark 
+               style="background-color: grey;">src/impl/x86_64/boot/header.asm</mark>. The code below is the code in this 
+               file. This file acts as a bootloader and allows appropriate locating of OS. This is a multiboot2 specification.
+               There are 4 data variables defined in this .asm file. One is to signify multiboot2 as a loader, one is to signify
+               that we are working in protected memory mode, one to show length of header and one data variable for the sum of
+               all other variables in the file. We also create a label multibootloader in this file, which is used to locate and enter
+               the OS later on. 
+            </p>
+        </h4>
+        <br>
+        <img src="images/headerasm.jpg" class="center">
+        <br><br>
+
+    <h3 class="taskheadings">
+        Step 3 : Assembly files 2 - main.asm
+    </h3>
+    <h4 style="font-weight: lighter;">
+        <p class="taskheadings">
+            This file acts as our link for entering the 64-bit Operating System.
+            In the same direcoty as the header.asm file, this main.asm file was created, with the code given below.
+            I printed 'OK' on the console using this file. We move the number which represents 'OK' in the 
+            screen frame in this file, along with stating which OS version we are using, using the <mark 
+            style="background-color: grey;">bits</mark> command.
+        </p>
+    </h4>
+    <br>
+    <img src="images/mainasm.jpg" class="center">
+    <br><br>
+
+    <h3 class="taskheadings">
+        Step 4 : Linker File - linker.ld
+    </h3>
+    <h4 style="font-weight: lighter;">
+        <p class="taskheadings">
+            After creating a new folder called targets and making more folders and files following the hierarcy: <mark 
+            style="background-color: grey;">targets/x86_64/linker.ld</mark>, the code given below was used in this 
+            file. As the name implies, this file tells the computer how to link the OS together. We enter the
+            OS from this linker file, using the multibook section header we used in our header.asm file. This is a 
+            multiboot2 specification.
+        </p>
+    </h4>
+    <br>
+    <img src="images/linkerfile.jpg" class="center">
+    <br><br>
+
+
+    <h3 class="taskheadings">
+        Step 5 : Configuration file - grub.cfg
+    </h3>
+    <h4 style="font-weight: lighter;">
+        <p class="taskheadings">
+            Creating a folder named iso in the same directory as the linker file. Following the given directories and
+            creating 2 more files, <mark style="background-color: grey;">targets/x86_64/iso/.gitignore</mark> and 
+            <mark style="background-color: grey;">targets/x86_64/iso/boot/grub/grub.cfg</mark> files in the folders.
+            The code is given below. In this file, we name our OS and specify where we can find this OS, to be able to boot.
+            This OS is in the kernel.bin file inside the boot folder. We also specify which type of loader is used in this file.
+           
+        </p>
+    </h4>
+    <br>
+    <img src="images/gitignorr.jpg" class="center">
+    <br><br>
+    <img src="images/grubcfg.jpg" class="center">
+    <br><br>
+        
+
+    <h3 class="taskheadings">
+        Step 6 : Makefile
+    </h3>
+    <h4 style="font-weight: lighter;">
+        <p class="taskheadings">
+            Create a Makefile in the same directory as the buildenv folder we made in the start. Copy the 
+            <a href="https://github.com/davidcallanan/os-series/blob/ep1/Makefile" style="text-decoration: none;"> code </a> 
+            below in the Makefile.
+        </p>
+    </h4>
+    <br>
+    <img src="images/makefile.jpg" class="center">
+    <br><br>
+
+
+    <h3 class="taskheadings">
+        Step 7 : Building and Emulating
+    </h3>
+    <h4 style="font-weight: lighter;">
+        <p class="taskheadings">
+            After saving the Makefile, run command 3 to build the x86_64 system. After bulding, exit this system using
+            exit(command 4). Then after making sure Qemu is running and the qemu path has been added to the path variables
+            , run command 5 to emulate
+            the OS and the commands we have just written. 
+        </p>
+    </h4>
+    <br>
+    <img src="images/output1.jpg" class="center">
+    <br><br>
+    
+    <hr>
+    <br>
+    </div>
+    
+</main>
+
+</div>
+
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<div style="background-color:black">
+<hr><br>
+<h5 style="text-align: center; color:blanchedalmond; font-weight: lighter;">Copyright © 2021 Daniyah Imran.
+</h5>
+<br>
+</div>
+</body>
+</html>

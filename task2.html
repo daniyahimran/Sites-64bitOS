@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>64bit OS</title>
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div>
+<header>
+    <nav>
+    <div class="name">
+        <a href="aboutme.html">About Me</a>
+        <a href="cv.html">My CV</a>
+        <a href="index.html">Home</a>
+    </div>
+
+    <div class="button_menu">
+        <a href="task1.html">Task 1</a>
+        <a href="task2.html">Task 2</a>
+        <a href="https://github.com/daniyahimran/64bit-OS">Github Repository</a>
+    </div>
+</nav>
+</header>
+<br><br><br><br>
+
+<div class="center center_tasks">
+<br>
+    <h2>
+    Printing on Console using x86 64-bit Operating System 
+    </h2>
+    <h4 style="font-weight: lighter;">
+        This post will tell how I made a 64-bit OS and how to print to the sreen.
+    </h4>
+<br>
+</div>
+<br><br>
+<div class="center center_tasks">
+        <h4 style="font-weight: lighter;">
+            This is Part 2 of the 64-bit OS series. Please go through <a href="task1.html" >Task 1</a> first.
+            In this Task, most of the files used were same as in <a href="task1.html" >Task 1</a>. However, in 
+            this part, I updated the previously 32 bit OS to a 64 bit and using .c files, printed on the console
+            using this 64-bit OS
+        </h4>
+    <br>
+    </div>
+
+<main>  
+        <br>
+    <div class="center center_tasks">   
+        <br><h2 class="taskheadings">
+            Required Softwares: 
+        </h2>
+        <hr>
+        <br>
+        <h4 style="font-weight: lighter;">
+            <ul style="list-style-type: circle; padding-left: 35px;">
+                <li> <a href="https://code.visualstudio.com/" style=" color:black">IDE</a> - Visual Studio Code</li>
+                <li><a href="https://www.docker.com/" style=" color: black;">Docker</a> - For creating linux image.</li>
+                <li><a href="https://www.qemu.org/" style=" color: black;">Qemu</a> - To run our OS</li>
+              </ul>  
+        </h4>
+
+        <br><h2 class="taskheadings">
+            Commands Used: 
+        </h2>
+        <hr><br>
+        <h4 style="font-weight: lighter;">
+            <ul style="list-style-type: circle; padding-left: 35px;">
+                <li> To build image: <mark> docker build buildenv -t myos-buildenv </mark></li>
+                <li> To enter the built image:<mark> docker run --rm -it -v "%cd%":/root/env myos-buildenv</mark></li>
+                <li> To build the x86-64 system: <mark>make build-x86_64</mark></li>
+                <li> To exit image:<mark> exit</mark></li>
+                <li> To run commands in 64-bit OS: <mark>qemu-system-x86_64 -cdrom dist/x86_64/kernel.iso</mark></li>
+              </ul>  
+        </h4>
+
+        
+        <br><h2 class="taskheadings">
+            File Hierarchy
+        </h2>
+        <hr><br>
+        <div style="padding-left: 7%;">
+        <h4 style="font-weight: lighter;">
+            <ul style="list-style-type: circle; padding-left: 35px;">
+               
+                <li> <a href="https://github.com/daniyahimran/64bit-OS/blob/main/Makefile">Makefile</a></li>
+                
+                <li>buildenv<ul style="list-style-type: square; padding-left: 35px;">
+                    <li><a href="https://github.com/daniyahimran/64bit-OS/blob/main/buildenv/Dockerfile">Dockerfile</a> </li>
+                    </ul> </li>
+
+
+                <li> src
+                    <ul style="list-style-type: square; padding-left: 35px;">
+                    <li> impl
+                        <ul style="list-style-type: circle; padding-left: 35px;">
+                            <li> kernel
+                                <ul style="list-style-type: square; padding-left: 35px;">
+                                    <li> <a href="https://github.com/daniyahimran/64bit-OS/blob/main/src/impl/kernel/main.c">main.c</a>
+                                    </li> 
+                                </ul>
+                            </li>   
+
+                            <li> x86_64
+                                    <ul style="list-style-type: square; padding-left: 35px;">
+                                        <li> <a href="https://github.com/daniyahimran/64bit-OS/blob/main/src/impl/x86_64/print.c">print.c</a>
+                                        </li>
+
+                                        <li> boot <ul style="list-style-type: circle; padding-left: 35px;">
+                                            <li> <a href="https://github.com/daniyahimran/64bit-OS/blob/main/src/impl/x86_64/boot/main.asm">main.asm</a></li> 
+
+                                            <li> <a href="https://github.com/daniyahimran/64bit-OS/blob/main/src/impl/x86_64/boot/main64.asm">main64.asm</a></li>
+
+                                            <li> <a href="https://github.com/daniyahimran/64bit-OS/blob/main/src/impl/x86_64/boot/header.asm">header.asm</a></li>
+                                        </ul>
+                                        </li>
+                                    </ul>
+            
+                                </li>
+                            </ul>
+                    </li>
+                    <li> intf
+                        <ul style="list-style-type: circle; padding-left: 35px;">
+                            <li>
+                                <a href="https://github.com/daniyahimran/64bit-OS/blob/main/src/intf/print.h">print.h</a>
+                            </li>
+                        </ul>
+
+
+                    </li>
+                    </ul> 
+                </li>
+                <li>
+                    targets
+                    <ul style="list-style-type: square; padding-left: 35px;">
+                        <li>
+                            x86_64
+                            <ul style="list-style-type: circle; padding-left: 35px;">
+                                <li>
+                                    <a href="https://github.com/daniyahimran/64bit-OS/blob/main/targets/x86_64/linker.ld">linker.ld</a>
+                                </li>
+
+                                <li>
+                                    iso
+                                    <ul style="list-style-type: square; padding-left: 35px;">
+                                        <li><a href="https://github.com/daniyahimran/64bit-OS/blob/main/targets/x86_64/iso/.gitignore">.gitignore</a></li>
+
+                                        <li>
+                                            boot
+                                            <ul style="list-style-type: circle; padding-left: 35px;">
+                                                <li>
+                                                    grub
+                                                    <ul style="list-style-type: square; padding-left: 35px;">
+                                                        <li>
+                                                            <a href="https://github.com/daniyahimran/64bit-OS/tree/main/targets/x86_64/iso/boot/grub">grub.cfg</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul> 
+                                        </li>
+                                    </ul> 
+                                </li>
+                            </ul> 
+                        </li>
+                    </ul>
+                </li>    
+                </ul>
+            </div>
+        </h4>
+    
+    
+        <br><h2 class="taskheadings">
+            Explanation about each files: 
+        </h2>
+        <hr><br>
+        <h3 class="taskheadings">
+            1 - Docker File
+        </h3>
+        <h4 style="font-weight: lighter;">
+            <p class="taskheadings">
+                As in previous task, we use thus file to create an image of Linux OS on our PC.
+                We set the directory and give commands to install some basic software and assemblers to run 
+                the assembly code in this file. After creation of image, we run another command to get inside this image.
+            </p>
+        </h4>
+        <br>
+
+        <h3 class="taskheadings">
+            2 - Assembly files (.asm)
+        </h3>
+        <h4 style="font-weight: lighter;">
+            <p class="taskheadings">
+                There are three .asm files in this version of the assignment. A basic <mark 
+                style="background-color: grey;">header.asm</mark> which serves as a   
+                bootloader and allows appropriate locating of OS. This is a multiboot2 specification.
+            </p>
+
+            <p class="tasheadings">
+                In the <mark 
+                style="background-color: grey;">main.asm</mark>file, we specify which bit system we want to create, by changing OS into long mode.
+                This file acts as our link for entering the 64-bit Operating System. 
+                We also create a stack in this file and set its size by allocating memory, so that we
+                 can run commands which call multiple functions in the .c files. We split the code of this file into 
+                 multiple subroutines, i.e  functions in assembly. This file also sets up paging i.e creates
+                 virtual memory to hold data and run the commands in our new OS. We create a 4 level page table, each of 
+                 standard size 512. To locate the page table entries we also set up a Global Descriptor Table, also of standard 
+                 size.   
+            </p>
+
+            <p class="tasheadings">
+                In the <mark 
+                style="background-color: grey;">main64.asm</mark> file, we specify which bit system we want to create. We change the bit to 64 and enable long mode.
+                To make sure all commands run correctly, we load 0 or null into the data segment registers.
+                This file acts as our link for entering the 64-bit Operating System. 
+            </p>
+        </h4>
+        <br>
+
+    <h3 class="taskheadings">
+        3 - Header file (.h)
+    </h3>
+    <h4 style="font-weight: lighter;">
+        <p class="taskheadings">
+           We use this header file as an interface for the .c files and initialize functions used in the .c files here.
+           We also set up different colours, using enum data structure, for printing on the console later on. We use standard integer and standard deff
+           header files to include macros in the .c files. We also use pragma once, which allows the main.c
+           to be included only once in a single compilation   
+        </p>
+    </h4>
+    <br>
+
+    <h3 class="taskheadings">
+        4 - C files (.c)
+    </h3>
+    <h4 style="font-weight: lighter;">
+        <p class="taskheadings"> 
+            The <mark style="background-color: grey;">main.c</mark> file function acts as our main function (as it has the kernel_main() function) which is called 
+            in the main.asm assembly program, which is run upon running the emulator on the OS. We create 3 main
+            functions here, clear() to print a new line, a function to set colour and str() function to print any
+            string we want on the screen. 
+        </p>
+
+        <p class="taskheadings"> 
+            The <mark style="background-color: grey;">print.c</mark> file defines and contains the functions which were
+            previously initialized in the print.h file. In this file, we use a complex design using videographics and video-memory.
+            We also create a structure for each char, with an 8 bit ascii code specifying the character and another 8 bit number
+            specifying what the colour of that particular character is to be. As we are printing on video memory, number of coloumns
+            and rows are fixed and standard. We also create a buffer which tells us about all combinations of rows*coloumns of the screen.
+            We then define new line, empty line and a normal print str() function.
+
+        </p>
+
+    </h4>
+    <br>
+
+    <h3 class="taskheadings">
+        5 - Linker file (.ld)
+    </h3>
+    <h4 style="font-weight: lighter;">
+        <p class="taskheadings">
+           As the name implies, this file tells the computer how to link the OS together. We enter the
+            OS from this linker file, using the multibook section header we used in our header.asm file. This is a 
+            multiboot2 specification. 
+        </p>
+    </h4>
+    <br>
+        
+
+    <h3 class="taskheadings">
+        6 - Makefile
+    </h3>
+    <h4 style="font-weight: lighter;">
+        <p class="taskheadings">
+            This Makefile is used in correctly building the OS on our Linux Image.
+          In the previos task, the Makefile compiled all .asm files to source files and then to object files but this has been changed to
+          .c files. In this file, all .c files in our main OS folder are also compiled to object files.
+          We also change directory of the file retreiving.
+          We also use nasm which was installd when building the linux image, to run assembly commands.
+          In this file, the iso file is created while building the x86_64 environment on our PC.
+          This is done by using linker file and giving it the object files. 
+
+        </p>
+    </h4>
+    <br>
+
+
+    <br><h2 class="taskheadings">
+        Output
+    </h2>
+    <hr><br>
+    <img src="images/output.jpg" class="center">
+    <br><br>
+    
+    <hr>
+    <br>
+    </div>
+    
+</main>
+
+</div>
+
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<div style="background-color:black">
+<hr><br>
+<h5 style="text-align: center; color:blanchedalmond; font-weight: lighter;">Copyright © 2021 Daniyah Imran.
+</h5>
+<br>
+</div>
+</body>
+</html>
